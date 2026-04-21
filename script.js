@@ -1,170 +1,226 @@
-// ===== CART (localStorage) =====
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+// ===== CART =====
+let cart = JSON.parse(localStorage.getItem("menuCart")) || [];
 
-function addProduct(btn, name) {
-  let card = btn.parentElement;
-  let select = card.querySelector("select");
-  let [weight, price] = select.value.split("-");
-  add(name + " (" + weight + "g)", Number(price));
-}
+// ===== PROMO CODES =====
+const promoCodes = {
+  "DRDS10":  10,
+  "HESHEM5": 5,
+  "DEVS7":   7
+};
+let appliedPromo = null;
 
-function updatePrice(select) {
-  let card = select.parentElement;
-  let priceText = card.querySelector("p");
-  if (priceText) {
-    priceText.innerText = select.value.split("-")[1] + " جنيه";
+// ===== NAVIGATION =====
+function showSection(id, btn) {
+  // Hide all sections
+  document.querySelectorAll(".menu-section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+
+  // Show selected
+  const section = document.getElementById("section-" + id);
+  if (section) {
+    section.classList.add("active");
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  if (btn) btn.classList.add("active");
+
+  // Scroll nav btn into view
+  if (btn) {
+    btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
   }
 }
 
-function add(name, price) {
-  let item = cart.find(i => i.name === name);
-  if (item) { item.qty++; } else { cart.push({ name, price, qty: 1 }); }
-  render();
-  showToast("✅ تمت الإضافة للسلة");
+// ===== CART FUNCTIONS =====
+function addItem(name, price) {
+  let existing = cart.find(i => i.name === name);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ name, price, qty: 1 });
+  }
+  saveCart();
+  renderCart();
+  showToast("✅ تمت الإضافة");
 }
 
-function changeQty(i, v) {
-  cart[i].qty += v;
-  if (cart[i].qty <= 0) cart.splice(i, 1);
-  render();
+function changeQty(index, delta) {
+  cart[index].qty += delta;
+  if (cart[index].qty <= 0) cart.splice(index, 1);
+  saveCart();
+  renderCart();
+  // recalc promo if applied
+  if (appliedPromo) recalcPromo();
 }
 
-function render() {
-  let box = document.getElementById("box");
-  let total = document.getElementById("total");
-  if (!box || !total) return;
-  box.innerHTML = "";
+function saveCart() {
+  localStorage.setItem("menuCart", JSON.stringify(cart));
+}
+
+function renderCart() {
+  const container = document.getElementById("cartItems");
+  const totalEl   = document.getElementById("cartTotal");
+  const badge     = document.getElementById("cartBadge");
+  if (!container) return;
+
+  if (cart.length === 0) {
+    container.innerHTML = '<div class="empty-cart">🛒 السلة فارغة</div>';
+    totalEl.innerText = "0 جنيه";
+    badge.innerText = "0";
+    return;
+  }
+
   let sum = 0;
-  cart.forEach((c, i) => {
-    sum += c.price * c.qty;
-    box.innerHTML += `
-      <div class="item">
-        <div class="left"><span>${c.name}</span></div>
-        <div class="right"><span>${c.price * c.qty} جنيه</span></div>
-        <div class="qty">
-          <button onclick="changeQty(${i},1)">+</button>
-          <span>${c.qty}</span>
-          <button onclick="changeQty(${i},-1)">−</button>
+  let html = "";
+  cart.forEach((item, i) => {
+    const lineTotal = item.price * item.qty;
+    sum += lineTotal;
+    html += `
+      <div class="cart-item">
+        <span class="cart-item-name">${item.name}</span>
+        <span class="cart-item-price">${lineTotal} جنيه</span>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${i}, -1)">−</button>
         </div>
       </div>`;
   });
-  total.innerText = sum;
-  document.getElementById("cartCount").innerText = cart.reduce((s, i) => s + i.qty, 0);
-  localStorage.setItem("cart", JSON.stringify(cart));
+
+  container.innerHTML = html;
+
+  // Apply promo discount to displayed total
+  if (appliedPromo) {
+    const discount = Math.round(sum * appliedPromo.discount / 100);
+    totalEl.innerText = (sum - discount) + " جنيه";
+  } else {
+    totalEl.innerText = sum + " جنيه";
+  }
+
+  badge.innerText = cart.reduce((s, i) => s + i.qty, 0);
 }
 
-function openStory(t, x) {
-  document.getElementById("title").innerText = t;
-  document.getElementById("text").innerText = x;
-  document.getElementById("popup").classList.add("active");
+// ===== PROMO =====
+function applyPromo() {
+  const code   = document.getElementById("promoInput").value.trim().toUpperCase();
+  const msgEl  = document.getElementById("promoMsg");
+  const lineEl = document.getElementById("discountLine");
+  const totalEl = document.getElementById("cartTotal");
+
+  if (!code) {
+    msgEl.style.color = "#c0392b";
+    msgEl.innerText   = "⚠️ ادخل الكود الأول";
+    return;
+  }
+
+  if (promoCodes[code]) {
+    appliedPromo = { code, discount: promoCodes[code] };
+    const raw = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const disc = Math.round(raw * appliedPromo.discount / 100);
+    const final = raw - disc;
+
+    msgEl.style.color    = "#27ae60";
+    msgEl.innerText      = "✅ خصم " + appliedPromo.discount + "% اتطبق!";
+    lineEl.style.display = "block";
+    lineEl.innerText     = "🎟️ وفرت: " + disc + " جنيه | الإجمالي: " + final + " جنيه";
+    totalEl.innerText    = final + " جنيه";
+  } else {
+    appliedPromo         = null;
+    msgEl.style.color    = "#c0392b";
+    msgEl.innerText      = "❌ كود غلط";
+    lineEl.style.display = "none";
+    const raw = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    totalEl.innerText    = raw + " جنيه";
+  }
 }
 
-function openSpecs(t, x) {
-  document.getElementById("title").innerText = "المواصفات: " + t;
-  document.getElementById("text").innerText = x;
-  document.getElementById("popup").classList.add("active");
+function recalcPromo() {
+  if (!appliedPromo) return;
+  const raw   = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const disc  = Math.round(raw * appliedPromo.discount / 100);
+  const final = raw - disc;
+  const lineEl  = document.getElementById("discountLine");
+  const totalEl = document.getElementById("cartTotal");
+  if (lineEl) { lineEl.innerText = "🎟️ وفرت: " + disc + " جنيه | الإجمالي: " + final + " جنيه"; }
+  if (totalEl) totalEl.innerText = final + " جنيه";
 }
 
-function openCheckout() { document.getElementById("checkout").classList.add("active"); }
-function closePopup() { document.querySelectorAll(".popup").forEach(p => p.classList.remove("active")); }
-
-function send() {
+// ===== CHECKOUT =====
+function openCheckout() {
   if (cart.length === 0) { showToast("🛒 السلة فارغة!"); return; }
-  let name    = document.getElementById("name").value.trim();
-  let phone   = document.getElementById("phone") ? document.getElementById("phone").value.trim() : "";
-  let address = document.getElementById("address").value.trim();
+  document.getElementById("checkoutPopup").classList.add("active");
+}
+
+function closePopup() {
+  document.querySelectorAll(".popup-overlay").forEach(p => p.classList.remove("active"));
+}
+
+function sendOrder() {
+  if (cart.length === 0) { showToast("🛒 السلة فارغة!"); return; }
+  const name    = document.getElementById("custName").value.trim();
+  const phone   = document.getElementById("custPhone").value.trim();
+  const address = document.getElementById("custAddress").value.trim();
   if (!name || !address) { showToast("⚠️ من فضلك املأ بياناتك"); return; }
+
   let total = 0;
-  let msg = "🛒 *طلب جديد - بن الحشم*\n\n";
+  let msg = "🍽️ *طلب جديد من المطعم*\n\n";
   msg += "👤 الاسم: " + name + "\n";
   if (phone) msg += "📞 الهاتف: " + phone + "\n";
-  msg += "📍 العنوان: " + address + "\n\n─────────────\n";
-  cart.forEach(c => {
-    let t = c.price * c.qty; total += t;
-    msg += `☕ ${c.name} × ${c.qty} = ${t} جنيه\n`;
+  msg += "📍 العنوان: " + address + "\n\n";
+  msg += "─────────────────\n";
+
+  cart.forEach(item => {
+    const t = item.price * item.qty;
+    total += t;
+    if (item.price > 0) {
+      msg += `• ${item.name} × ${item.qty} = ${t} جنيه\n`;
+    } else {
+      msg += `• ${item.name} × ${item.qty} (حسب الطلب)\n`;
+    }
   });
-  msg += "─────────────\n💰 *الإجمالي: " + total + " جنيه*";
+
+  msg += "─────────────────\n";
+
+  if (appliedPromo) {
+    const disc = Math.round(total * appliedPromo.discount / 100);
+    msg += `🎟️ كود خصم (${appliedPromo.code}): -${disc} جنيه\n`;
+    total -= disc;
+  }
+
+  msg += "💰 *الإجمالي: " + total + " جنيه*";
+
   window.open("https://wa.me/201223136302?text=" + encodeURIComponent(msg));
-  cart = []; localStorage.removeItem("cart"); render(); closePopup();
+
+  // Reset
+  cart = [];
+  appliedPromo = null;
+  localStorage.removeItem("menuCart");
+  document.getElementById("promoInput").value   = "";
+  document.getElementById("promoMsg").innerText = "";
+  document.getElementById("discountLine").style.display = "none";
+  renderCart();
+  closePopup();
   showToast("✅ تم إرسال طلبك!");
 }
 
-function openCart() {
-  let cartEl = document.querySelector(".cart");
+// ===== SCROLL TO CART =====
+function scrollToCart() {
+  const cartEl = document.querySelector(".cart-section");
   if (cartEl) cartEl.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-function toggleMenu() {
-  document.getElementById("navMenu").classList.toggle("open");
-  document.getElementById("menuBtn").classList.toggle("open");
-}
-function closeMenu() {
-  document.getElementById("navMenu").classList.remove("open");
-  document.getElementById("menuBtn").classList.remove("open");
-}
-document.addEventListener("click", function(e) {
-  let menu = document.getElementById("navMenu");
-  let btn  = document.getElementById("menuBtn");
-  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) closeMenu();
-});
-
+// ===== TOAST =====
 function showToast(msg) {
-  let existing = document.querySelector(".toast");
+  const existing = document.querySelector(".toast");
   if (existing) existing.remove();
-  let t = document.createElement("div");
+  const t = document.createElement("div");
   t.className = "toast";
   t.innerText = msg;
-  Object.assign(t.style, {
-    position:"fixed", top:"50%", left:"50%",
-    transform:"translate(-50%,-50%)",
-    background:"rgba(0,240,255,0.95)", color:"#000",
-    padding:"14px 24px", borderRadius:"12px",
-    fontWeight:"bold", fontSize:"15px",
-    boxShadow:"0 0 20px #00f0ff", zIndex:"999999",
-    opacity:"0", transition:"opacity 0.3s",
-    fontFamily:"'Tajawal',sans-serif", textAlign:"center",
-    maxWidth:"280px", lineHeight:"1.5"
-  });
   document.body.appendChild(t);
   setTimeout(() => t.style.opacity = "1", 50);
   setTimeout(() => { t.style.opacity = "0"; setTimeout(() => t.remove(), 300); }, 1800);
 }
 
-// ===== SCROLL TO PRODUCT =====
-function scrollToProduct(name) {
-  let target = document.getElementById("product-" + name);
-  if (target) {
-    target.scrollIntoView({ behavior: "smooth", block: "center" });
-    target.style.transition = "box-shadow 0.3s";
-    target.style.boxShadow = "0 0 40px #00f0ff";
-    setTimeout(() => { target.style.boxShadow = ""; }, 1500);
-  }
-}
-
-
-
 // ===== INIT =====
 window.onload = function() {
-  render();
-
-  slider = document.getElementById("slider");
-
-  // السلايدر اتشال
-
-  // Caffeine bars
-  document.querySelectorAll(".fill").forEach(bar => {
-    let value = Number(bar.getAttribute("data-caffeine"));
-    let percentText = bar.querySelector(".percent");
-    if (value < 60)      bar.classList.add("low");
-    else if (value < 80) bar.classList.add("medium");
-    else if (value < 95) bar.classList.add("high");
-    else                 bar.classList.add("extreme");
-    setTimeout(() => { bar.style.width = value + "%"; }, 300);
-    let count = 0;
-    let iv = setInterval(() => {
-      if (count >= value) { clearInterval(iv); return; }
-      count++;
-      if (percentText) percentText.innerText = count + "%";
-    }, 15);
-  });
+  renderCart();
 };
