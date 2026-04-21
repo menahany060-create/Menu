@@ -1,235 +1,561 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>بن الحشم</title>
-<meta name="description" content="🔥 صحصح بمزاج... قهوتك الصح لكل يوم تقيل! ⚡ كافيين عالي = طاقة أعلى 👌 طعم مظبوط يخليك دايمًا في المود">
-<meta property="og:title" content="☕ بن الحشم">
-<meta property="og:description" content="⚡ طاقة يومك في كوباية ☕ 💥 قهوة تقيلة… مزاج عالي 👌 اختار توليفتك بنفسك وابدأ صح 🚀 ابدأ يومك صح.. وكمل للآخر">
-<meta property="og:image" content="https://your-site.com/coffee.jpg">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="☕ بن الحشم">
-<meta name="twitter:description" content="🔥 صحصح بمزاج... قهوتك الصح لكل يوم تقيل! ⚡ كافيين عالي = طاقة أعلى">
-<meta name="twitter:image" content="https://your-site.com/coffee.jpg">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+<title>المطعم</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-
 </head>
-
 <body>
 
-<div class="header">
-  <img class="logo" src="logo.png">
-  <div class="logoText">بن الحشم ☕</div>
-
-  <!-- ✅ زرار المنيو -->
-  <button class="menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="القائمة">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-
-  <!-- ✅ المنيو -->
-  <div class="nav-menu" id="navMenu">
-    <a href="#">🏠 الرئيسية</a>
-    <a href="#">☕ المنتجات</a>
-    <a href="#" onclick="openCheckout(); closeMenu()">🛒 اطلب الآن</a>
-    <a href="https://wa.me/201223136302" target="_blank">📞 تواصل معنا</a>
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="header-top">
+    <div class="logo-area">
+      <div class="logo-icon">🍽️</div>
+      <div class="logo-text">
+        <span class="logo-main">مطعمنا</span>
+        <span class="logo-sub">أصالة الطعم • فخامة التجربة</span>
+      </div>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-</div>
 
-<h3 class="section-title">🔥 الأكثر مبيعًا</h3>
+  <!-- NAV CATEGORIES -->
+  <nav class="categories-nav" id="categoriesNav">
+    <div class="nav-scroll">
+      <button class="nav-btn active" onclick="showSection('المشروبات', this)">☕ المشروبات</button>
+      <button class="nav-btn" onclick="showSection('العصائر', this)">🧃 العصائر</button>
+      <button class="nav-btn" onclick="showSection('الفرابيه', this)">🥤 الفرابيه</button>
+      <button class="nav-btn" onclick="showSection('ملك_شيك', this)">🍫 ملك شيك</button>
+      <button class="nav-btn" onclick="showSection('الآيس_كريم', this)">🍦 آيس كريم</button>
+      <button class="nav-btn" onclick="showSection('الوافل', this)">🧇 الوافل</button>
+      <button class="nav-btn" onclick="showSection('البيتزا', this)">🍕 البيتزا</button>
+      <button class="nav-btn" onclick="showSection('الكريب', this)">🥐 الكريب</button>
+      <button class="nav-btn" onclick="showSection('البرجر', this)">🍔 البرجر</button>
+      <button class="nav-btn" onclick="showSection('المكرونات', this)">🍝 المكرونات</button>
+      <button class="nav-btn" onclick="showSection('الفطائر', this)">🫓 الفطائر</button>
+      <button class="nav-btn" onclick="showSection('الوجبات', this)">🍽️ الوجبات</button>
+      <button class="nav-btn" onclick="showSection('السوري', this)">🥙 السوري</button>
+      <button class="nav-btn" onclick="showSection('الصيامي', this)">🫕 الصيامي</button>
+    </div>
+  </nav>
+</header>
 
-<div class="slider-wrapper">
-  <button class="slider-btn left" onclick="moveSlider(-1)">‹</button>
-  <div class="slider" id="slider">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">أهلاً بك في مطعمنا</h1>
+    <p class="hero-sub">اختر من أشهى الأصناف واطلب مباشرة عبر واتساب</p>
+    <button class="hero-btn" onclick="document.querySelector('.main-content').scrollIntoView({behavior:'smooth'})">
+      تصفح المنيو ↓
+    </button>
+  </div>
+  <div class="hero-overlay"></div>
+</section>
 
-    <div class="slide-card">
-      <span class="badge">🔥</span>
-      <img src="hashm.png">
-      <p>الحشم</p>
-      <select onchange="updatePrice(this)">
-        <option value="125-150"> جرام(125) - 150 جنيه</option>
-        <option value="250-250"> جرام (250)- 250 جنيه</option>
-        <option value="500-350"> جرام(500) - 350 جنيه</option>
-      </select>
-      <button class="neonBtn" onclick="addProduct(this,'الحشم')">إضافة للسلة</button>
-      <button onclick="openStory('الحشم','قوة وكافيين عالي 🔥')">تفاصيل</button>
+<!-- MAIN CONTENT -->
+<main class="main-content">
+
+  <!-- ===== المشروبات ===== -->
+  <section class="menu-section active" id="section-المشروبات">
+    <div class="section-header">
+      <h2>☕ المشروبات الساخنة</h2>
+      <p class="section-sub">ركن القهوة</p>
+    </div>
+    <div class="subsection-title">☕ القهوة</div>
+    <div class="items-grid">
+      <div class="item-card" data-name="قهوة تركي" data-price="20">
+        <div class="item-info"><span class="item-name">قهوة تركي</span></div>
+        <div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('قهوة تركي', 20)">+</button></div>
+      </div>
+      <div class="item-card" data-name="قهوة تركي دبل" data-price="30">
+        <div class="item-info"><span class="item-name">قهوة تركي دبل</span></div>
+        <div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('قهوة تركي دبل', 30)">+</button></div>
+      </div>
+      <div class="item-card" data-name="قهوة بندق" data-price="25">
+        <div class="item-info"><span class="item-name">قهوة بندق</span></div>
+        <div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('قهوة بندق', 25)">+</button></div>
+      </div>
+      <div class="item-card" data-name="قهوة فسدق" data-price="25">
+        <div class="item-info"><span class="item-name">قهوة فسدق</span></div>
+        <div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('قهوة فسدق', 25)">+</button></div>
+      </div>
+      <div class="item-card" data-name="قهوة فانيليا" data-price="25">
+        <div class="item-info"><span class="item-name">قهوة فانيليا</span></div>
+        <div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('قهوة فانيليا', 25)">+</button></div>
+      </div>
+      <div class="item-card" data-name="قهوة شكولاته" data-price="25">
+        <div class="item-info"><span class="item-name">قهوة شكولاته</span></div>
+        <div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('قهوة شكولاته', 25)">+</button></div>
+      </div>
+      <div class="item-card" data-name="قهوة اسبرسو" data-price="25">
+        <div class="item-info"><span class="item-name">قهوة اسبرسو</span></div>
+        <div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('قهوة اسبرسو', 25)">+</button></div>
+      </div>
+      <div class="item-card" data-name="قهوة اسبرسو دبل" data-price="30">
+        <div class="item-info"><span class="item-name">قهوة اسبرسو دبل</span></div>
+        <div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('قهوة اسبرسو دبل', 30)">+</button></div>
+      </div>
+      <div class="item-card" data-name="قهوة فرنساوي" data-price="25">
+        <div class="item-info"><span class="item-name">قهوة فرنساوي</span></div>
+        <div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('قهوة فرنساوي', 25)">+</button></div>
+      </div>
+      <div class="item-card" data-name="كبتشينو ساده" data-price="25">
+        <div class="item-info"><span class="item-name">كبتشينو ساده</span></div>
+        <div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('كبتشينو ساده', 25)">+</button></div>
+      </div>
+      <div class="item-card" data-name="كبتشينو حليب" data-price="30">
+        <div class="item-info"><span class="item-name">كبتشينو حليب</span></div>
+        <div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('كبتشينو حليب', 30)">+</button></div>
+      </div>
+      <div class="item-card" data-name="سحلب مكسرات" data-price="30">
+        <div class="item-info"><span class="item-name">سحلب مكسرات</span></div>
+        <div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('سحلب مكسرات', 30)">+</button></div>
+      </div>
+      <div class="item-card" data-name="سحلب فواكه" data-price="35">
+        <div class="item-info"><span class="item-name">سحلب فواكه</span></div>
+        <div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('سحلب فواكه', 35)">+</button></div>
+      </div>
+      <div class="item-card" data-name="سحلب آيس كريم" data-price="35">
+        <div class="item-info"><span class="item-name">سحلب آيس كريم</span></div>
+        <div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('سحلب آيس كريم', 35)">+</button></div>
+      </div>
+      <div class="item-card" data-name="كاكاو ساده" data-price="25">
+        <div class="item-info"><span class="item-name">كاكاو ساده</span></div>
+        <div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('كاكاو ساده', 25)">+</button></div>
+      </div>
+      <div class="item-card" data-name="كاكاو حليب" data-price="30">
+        <div class="item-info"><span class="item-name">كاكاو حليب</span></div>
+        <div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('كاكاو حليب', 30)">+</button></div>
+      </div>
     </div>
 
-    <div class="slide-card">
-      <span class="badge">🔥</span>
-      <img src="espresso.png">
-      <p>ESPRESSO</p>
-      <select onchange="updatePrice(this)">
-        <option value="125-150"> جرام(125) - 150 جنيه</option>
-        <option value="250-250"> جرام (250)- 250 جنيه</option>
-        <option value="500-350"> جرام(500) - 350 جنيه</option>
-      </select>
-      <button class="neonBtn" onclick="addProduct(this,'ESPRESSO')">إضافة للسلة</button>
-      <button onclick="openStory('ESPRESSO','جرعة مركزة تعيشك فايق 🔥')">تفاصيل</button>
+    <div class="subsection-title">🍵 الشاي والمشروبات الساخنة</div>
+    <div class="items-grid">
+      <div class="item-card" data-name="شاي عادي" data-price="10"><div class="item-info"><span class="item-name">شاي عادي</span></div><div class="item-right"><span class="item-price">10 جنيه</span><button class="add-btn" onclick="addItem('شاي عادي', 10)">+</button></div></div>
+      <div class="item-card" data-name="شاي أخضر" data-price="12"><div class="item-info"><span class="item-name">شاي أخضر</span></div><div class="item-right"><span class="item-price">12 جنيه</span><button class="add-btn" onclick="addItem('شاي أخضر', 12)">+</button></div></div>
+      <div class="item-card" data-name="شاي فتله" data-price="12"><div class="item-info"><span class="item-name">شاي فتله</span></div><div class="item-right"><span class="item-price">12 جنيه</span><button class="add-btn" onclick="addItem('شاي فتله', 12)">+</button></div></div>
+      <div class="item-card" data-name="شاي بالياسمين" data-price="13"><div class="item-info"><span class="item-name">شاي بالياسمين</span></div><div class="item-right"><span class="item-price">13 جنيه</span><button class="add-btn" onclick="addItem('شاي بالياسمين', 13)">+</button></div></div>
+      <div class="item-card" data-name="شاي بالقرنفل" data-price="13"><div class="item-info"><span class="item-name">شاي بالقرنفل</span></div><div class="item-right"><span class="item-price">13 جنيه</span><button class="add-btn" onclick="addItem('شاي بالقرنفل', 13)">+</button></div></div>
+      <div class="item-card" data-name="شاي نعناع" data-price="12"><div class="item-info"><span class="item-name">شاي نعناع</span></div><div class="item-right"><span class="item-price">12 جنيه</span><button class="add-btn" onclick="addItem('شاي نعناع', 12)">+</button></div></div>
+      <div class="item-card" data-name="شاي بارد" data-price="35"><div class="item-info"><span class="item-name">شاي بارد</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('شاي بارد', 35)">+</button></div></div>
+      <div class="item-card" data-name="شاي حليب" data-price="15"><div class="item-info"><span class="item-name">شاي حليب</span></div><div class="item-right"><span class="item-price">15 جنيه</span><button class="add-btn" onclick="addItem('شاي حليب', 15)">+</button></div></div>
+      <div class="item-card" data-name="ينسون" data-price="10"><div class="item-info"><span class="item-name">ينسون</span></div><div class="item-right"><span class="item-price">10 جنيه</span><button class="add-btn" onclick="addItem('ينسون', 10)">+</button></div></div>
+      <div class="item-card" data-name="نعناع" data-price="10"><div class="item-info"><span class="item-name">نعناع</span></div><div class="item-right"><span class="item-price">10 جنيه</span><button class="add-btn" onclick="addItem('نعناع', 10)">+</button></div></div>
+      <div class="item-card" data-name="عناب سخن" data-price="10"><div class="item-info"><span class="item-name">عناب سخن</span></div><div class="item-right"><span class="item-price">10 جنيه</span><button class="add-btn" onclick="addItem('عناب سخن', 10)">+</button></div></div>
+      <div class="item-card" data-name="حليب" data-price="13"><div class="item-info"><span class="item-name">حليب</span></div><div class="item-right"><span class="item-price">13 جنيه</span><button class="add-btn" onclick="addItem('حليب', 13)">+</button></div></div>
+      <div class="item-card" data-name="حليه حليب" data-price="15"><div class="item-info"><span class="item-name">حليه حليب</span></div><div class="item-right"><span class="item-price">15 جنيه</span><button class="add-btn" onclick="addItem('حليه حليب', 15)">+</button></div></div>
+      <div class="item-card" data-name="قرفه ساره" data-price="13"><div class="item-info"><span class="item-name">قرفه ساره</span></div><div class="item-right"><span class="item-price">13 جنيه</span><button class="add-btn" onclick="addItem('قرفه ساره', 13)">+</button></div></div>
+      <div class="item-card" data-name="قرفه حليب" data-price="15"><div class="item-info"><span class="item-name">قرفه حليب</span></div><div class="item-right"><span class="item-price">15 جنيه</span><button class="add-btn" onclick="addItem('قرفه حليب', 15)">+</button></div></div>
+      <div class="item-card" data-name="قرفه بالسمسم" data-price="16"><div class="item-info"><span class="item-name">قرفه بالسمسم</span></div><div class="item-right"><span class="item-price">16 جنيه</span><button class="add-btn" onclick="addItem('قرفه بالسمسم', 16)">+</button></div></div>
+      <div class="item-card" data-name="زنجبيل" data-price="10"><div class="item-info"><span class="item-name">زنجبيل</span></div><div class="item-right"><span class="item-price">10 جنيه</span><button class="add-btn" onclick="addItem('زنجبيل', 10)">+</button></div></div>
+      <div class="item-card" data-name="كراويه" data-price="10"><div class="item-info"><span class="item-name">كراويه</span></div><div class="item-right"><span class="item-price">10 جنيه</span><button class="add-btn" onclick="addItem('كراويه', 10)">+</button></div></div>
+      <div class="item-card" data-name="لمون سخن" data-price="8"><div class="item-info"><span class="item-name">لمون سخن</span></div><div class="item-right"><span class="item-price">8 جنيه</span><button class="add-btn" onclick="addItem('لمون سخن', 8)">+</button></div></div>
+      <div class="item-card" data-name="كركديه سخن" data-price="10"><div class="item-info"><span class="item-name">كركديه سخن</span></div><div class="item-right"><span class="item-price">10 جنيه</span><button class="add-btn" onclick="addItem('كركديه سخن', 10)">+</button></div></div>
+      <div class="item-card" data-name="زنجبيل ليمون" data-price="12"><div class="item-info"><span class="item-name">زنجبيل ليمون</span></div><div class="item-right"><span class="item-price">12 جنيه</span><button class="add-btn" onclick="addItem('زنجبيل ليمون', 12)">+</button></div></div>
+      <div class="item-card" data-name="حمص شام" data-price="20"><div class="item-info"><span class="item-name">حمص شام</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('حمص شام', 20)">+</button></div></div>
+      <div class="item-card" data-name="إندومي + خضار نودلز" data-price="15"><div class="item-info"><span class="item-name">إندومي + خضار نودلز</span></div><div class="item-right"><span class="item-price">15 جنيه</span><button class="add-btn" onclick="addItem('إندومي + خضار نودلز', 15)">+</button></div></div>
     </div>
 
-    <div class="slide-card">
-      <span class="badge">🔥</span>
-      <img src="sikka.png">
-      <p>ع السكة</p>
-      <select onchange="updatePrice(this)">
-        <option value="125-150"> جرام(125) - 150 جنيه</option>
-        <option value="250-250"> جرام (250)- 250 جنيه</option>
-        <option value="500-350"> جرام(500) - 350 جنيه</option>
-      </select>
-      <button class="neonBtn" onclick="addProduct(this,'السكة')">إضافة للسلة</button>
-      <button onclick="openStory('السكة','تركيز عالي أثناء السفر 🚀')">تفاصيل</button>
+    <div class="subsection-title">☕ المشروبات الساخنة الأخرى</div>
+    <div class="items-grid">
+      <div class="item-card" data-name="كوفي ميكس ساده" data-price="25"><div class="item-info"><span class="item-name">كوفي ميكس ساده</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('كوفي ميكس ساده', 25)">+</button></div></div>
+      <div class="item-card" data-name="كوفي ميكس حليب" data-price="30"><div class="item-info"><span class="item-name">كوفي ميكس حليب</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('كوفي ميكس حليب', 30)">+</button></div></div>
+      <div class="item-card" data-name="نسكافيه ساده" data-price="25"><div class="item-info"><span class="item-name">نسكافيه ساده</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('نسكافيه ساده', 25)">+</button></div></div>
+      <div class="item-card" data-name="نسكافيه حليب" data-price="30"><div class="item-info"><span class="item-name">نسكافيه حليب</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('نسكافيه حليب', 30)">+</button></div></div>
+      <div class="item-card" data-name="هوت أوريو" data-price="35"><div class="item-info"><span class="item-name">هوت أوريو</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('هوت أوريو', 35)">+</button></div></div>
+      <div class="item-card" data-name="هوت أوريو مكسرات" data-price="30"><div class="item-info"><span class="item-name">هوت أوريو مكسرات</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('هوت أوريو مكسرات', 30)">+</button></div></div>
+      <div class="item-card" data-name="هوت بوريو" data-price="35"><div class="item-info"><span class="item-name">هوت بوريو</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('هوت بوريو', 35)">+</button></div></div>
+      <div class="item-card" data-name="هوت بوريو مكسرات" data-price="30"><div class="item-info"><span class="item-name">هوت بوريو مكسرات</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('هوت بوريو مكسرات', 30)">+</button></div></div>
+      <div class="item-card" data-name="بليله مكسرات" data-price="35"><div class="item-info"><span class="item-name">بليله مكسرات</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('بليله مكسرات', 35)">+</button></div></div>
+      <div class="item-card" data-name="هوت شوكلت" data-price="30"><div class="item-info"><span class="item-name">هوت شوكلت</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('هوت شوكلت', 30)">+</button></div></div>
+      <div class="item-card" data-name="أم علي" data-price="35"><div class="item-info"><span class="item-name">أم علي (كنافه - بسبوسه - حليب)</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('أم علي', 35)">+</button></div></div>
+      <div class="item-card" data-name="إبل سيدر" data-price="40"><div class="item-info"><span class="item-name">إبل سيدر (عصير تفاح - قرفه عصيان)</span></div><div class="item-right"><span class="item-price">40 جنيه</span><button class="add-btn" onclick="addItem('إبل سيدر', 40)">+</button></div></div>
     </div>
 
-    <div class="slide-card">
-      <span class="badge">🔥</span>
-      <img src="gad3.png">
-      <p>الجدع</p>
-      <select onchange="updatePrice(this)">
-        <option value="125-150"> جرام(125) - 150 جنيه</option>
-        <option value="250-250"> جرام (250)- 250 جنيه</option>
-        <option value="500-350"> جرام(500) - 350 جنيه</option>
-      </select>
-      <button class="neonBtn" onclick="addProduct(this,'الجدع')">إضافة للسلة</button>
-      <button onclick="openStory('الجدع','خفيف وناعم 😄')">تفاصيل</button>
+    <div class="subsection-title">🥤 المشروبات الغازية</div>
+    <div class="items-grid">
+      <div class="item-card" data-name="بيبسي" data-price="20"><div class="item-info"><span class="item-name">بيبسي</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('بيبسي', 20)">+</button></div></div>
+      <div class="item-card" data-name="مرينا" data-price="20"><div class="item-info"><span class="item-name">مرينا</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('مرينا', 20)">+</button></div></div>
+      <div class="item-card" data-name="سفن" data-price="20"><div class="item-info"><span class="item-name">سفن</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('سفن', 20)">+</button></div></div>
+      <div class="item-card" data-name="شوبس أناناس" data-price="20"><div class="item-info"><span class="item-name">شوبس أناناس</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('شوبس أناناس', 20)">+</button></div></div>
+      <div class="item-card" data-name="شوبس رمان" data-price="20"><div class="item-info"><span class="item-name">شوبس رمان</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('شوبس رمان', 20)">+</button></div></div>
+      <div class="item-card" data-name="فيروز" data-price="25"><div class="item-info"><span class="item-name">فيروز</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('فيروز', 25)">+</button></div></div>
+      <div class="item-card" data-name="بريل" data-price="25"><div class="item-info"><span class="item-name">بريل</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('بريل', 25)">+</button></div></div>
+      <div class="item-card" data-name="ريدبول" data-price="45"><div class="item-info"><span class="item-name">ريدبول</span></div><div class="item-right"><span class="item-price">45 جنيه</span><button class="add-btn" onclick="addItem('ريدبول', 45)">+</button></div></div>
+      <div class="item-card" data-name="راني" data-price="30"><div class="item-info"><span class="item-name">راني</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('راني', 30)">+</button></div></div>
+      <div class="item-card" data-name="مياه غازيه صغيره" data-price="10"><div class="item-info"><span class="item-name">مياه غازيه صغيره</span></div><div class="item-right"><span class="item-price">10 جنيه</span><button class="add-btn" onclick="addItem('مياه غازيه صغيره', 10)">+</button></div></div>
     </div>
 
-  </div>
-  <button class="slider-btn right" onclick="moveSlider(1)">›</button>
-</div>
-
-<!-- PRODUCTS -->
-<div class="products">
-
-  <div class="card top">
-    <img src="hashm.png">
-    <h3>توليفة الحشم</h3>
-    <div class="bar"><div class="fill" data-caffeine="90"><span class="percent">90%</span></div></div>
-    <small>كافيين 90%</small>
-    <button class="neonBtn" onclick="openStory('الحشم','قوة وكافيين عالي 🔥')">القصة</button>
-    <button class="neonBtn" onclick="openSpecs('الحشم','برازيلي + كولومبي')">المواصفات</button>
-    <select onchange="updatePrice(this)">
-      <option value="125-150"> جرام(125) - 150 جنيه</option>
-      <option value="250-250"> جرام (250)- 250 جنيه</option>
-      <option value="500-350"> جرام(500) - 350 جنيه</option>
-    </select>
-    <button class="neonBtn" onclick="addProduct(this,'الحشم')">إضافة للسلة</button>
-  </div>
-
-  <div class="card top">
-    <img src="ayoub.png">
-    <h3>توليفة أيوب</h3>
-    <div class="bar"><div class="fill" data-caffeine="65"><span class="percent">65%</span></div></div>
-    <small>كافيين 65%</small>
-    <button class="neonBtn" onclick="openStory('أيوب','الصبر مفتاح الفرج 💪')">القصة</button>
-    <button class="neonBtn" onclick="openSpecs('أيوب','متوازن وخفيف')">المواصفات</button>
-    <select onchange="updatePrice(this)">
-      <option value="125-150"> جرام(125) - 150 جنيه</option>
-      <option value="250-250"> جرام (250)- 250 جنيه</option>
-      <option value="500-350"> جرام(500) - 350 جنيه</option>
-    </select>
-    <button class="neonBtn" onclick="addProduct(this,'أيوب')">إضافة للسلة</button>
-  </div>
-
-  <div class="card top">
-    <img src="sikka.png">
-    <h3>توليفة ع السكة</h3>
-    <div class="bar"><div class="fill" data-caffeine="80"><span class="percent">80%</span></div></div>
-    <small>كافيين 80%</small>
-    <button class="neonBtn" onclick="openStory('السكة','تركيز طويل في السفر 🚀')">القصة</button>
-    <button class="neonBtn" onclick="openSpecs('السكة','مناسبة للسفر')">المواصفات</button>
-    <select onchange="updatePrice(this)">
-      <option value="125-150"> جرام(125) - 150 جنيه</option>
-      <option value="250-250"> جرام (250)- 250 جنيه</option>
-      <option value="500-350"> جرام(500) - 350 جنيه</option>
-    </select>
-    <button class="neonBtn" onclick="addProduct(this,'السكة')">إضافة للسلة</button>
-  </div>
-
-  <div class="card top">
-    <img src="gad3.png">
-    <h3>توليفة الجدع</h3>
-    <div class="bar"><div class="fill" data-caffeine="50"><span class="percent">50%</span></div></div>
-    <small>كافيين 50%</small>
-    <button class="neonBtn" onclick="openStory('الجدع','للجدعان بس 😄')">القصة</button>
-    <button class="neonBtn" onclick="openSpecs('الجدع','خفيف وناعم')">المواصفات</button>
-    <select onchange="updatePrice(this)">
-      <option value="125-150"> جرام(125) - 150 جنيه</option>
-      <option value="250-250"> جرام (250)- 250 جنيه</option>
-      <option value="500-350"> جرام(500) - 350 جنيه</option>
-    </select>
-    <button class="neonBtn" onclick="addProduct(this,'الجدع')">إضافة للسلة</button>
-  </div>
-
-  <div class="card top">
-    <img src="espresso.png">
-    <h3>ESPRESSO</h3>
-    <div class="bar"><div class="fill" data-caffeine="95"><span class="percent">95%</span></div></div>
-    <small>كافيين 95%</small>
-    <button class="neonBtn" onclick="openStory('ESPRESSO','جرعة كافيين مركزة 🔥 تعيشك فايق على الآخر')">القصة</button>
-    <button class="neonBtn" onclick="openSpecs('ESPRESSO','تحميص داكن + نكهة قوية مركزة')">المواصفات</button>
-    <select onchange="updatePrice(this)">
-      <option value="125-150"> جرام(125) - 150 جنيه</option>
-      <option value="250-250"> جرام (250)- 250 جنيه</option>
-      <option value="500-350"> جرام(500) - 350 جنيه</option>
-    </select>
-    <button class="neonBtn" onclick="addProduct(this,'ESPRESSO')">إضافة للسلة</button>
-  </div>
-
-</div>
-
-<!-- CART -->
-<div class="cart">
-  <h3>🛒 السلة</h3>
-  <div id="box"></div>
-  <h4>الإجمالي: <span id="total">0</span></h4>
-  <button class="checkoutBtn" onclick="openCheckout()">تأكيد الطلب</button>
-</div>
-
-<!-- CHECKOUT -->
-<div id="checkout" class="popup" onclick="closePopup()">
-  <div class="popup-content" onclick="event.stopPropagation()">
-    <h3>تأكيد الطلب</h3>
-    <input id="name" placeholder="الاسم">
-    <input id="phone" placeholder="رقم الهاتف" type="tel" inputmode="numeric">
-    <input id="address" placeholder="العنوان">
-    <button class="checkoutBtn" onclick="send()">إرسال واتساب</button>
-  </div>
-</div>
-
-<!-- POPUP -->
-<div id="popup" class="popup" onclick="closePopup()">
-  <div class="popup-content">
-    <h3 id="title"></h3>
-    <p id="text"></p>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-content">
-    <h3>☕ بن الحشم</h3>
-    ملحوظة: احنا بنستخدم أجود أنواع البن الموجودة في العالم لكن كل توليفة بنسب مختلفه
-    <p>شركة (بن الحشم) التابعه لشركة (سميركو للاستيراد و التصدير) هي شركه اردنية الاصل تأسست عام 1983</p>
-    <p>العنوان: الاردن_السلط_شارع اليرموك</p>
-    <p>الهاتف: 00962799198420</p>
-    <div class="footer-links">
-      <a href="#">الرئيسية</a>
-      <a href="#">المنتجات</a>
-      <a href="#" onclick="openCheckout()">اطلب الآن</a>
+    <div class="subsection-title">🚬 ركن الشيشه</div>
+    <div class="items-grid">
+      <div class="item-card" data-name="حجر قص بارد" data-price="7"><div class="item-info"><span class="item-name">حجر قص بارد</span></div><div class="item-right"><span class="item-price">7 جنيه</span><button class="add-btn" onclick="addItem('حجر قص بارد', 7)">+</button></div></div>
+      <div class="item-card" data-name="حجر قص سخن" data-price="10"><div class="item-info"><span class="item-name">حجر قص سخن</span></div><div class="item-right"><span class="item-price">10 جنيه</span><button class="add-btn" onclick="addItem('حجر قص سخن', 10)">+</button></div></div>
+      <div class="item-card" data-name="شيشه فواكه" data-price="30"><div class="item-info"><span class="item-name">شيشه فواكه (مانجو-بطيخ-فراوله-تفاح-نعناع-لمون نعناع)</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('شيشه فواكه', 30)">+</button></div></div>
+      <div class="item-card" data-name="شيشه فواكه كوكتيل" data-price="35"><div class="item-info"><span class="item-name">شيشه فواكه كوكتيل</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('شيشه فواكه كوكتيل', 35)">+</button></div></div>
+      <div class="item-card" data-name="شيشه فواكه بالنكهه" data-price="40"><div class="item-info"><span class="item-name">شيشه فواكه بالنكهه</span></div><div class="item-right"><span class="item-price">40 جنيه</span><button class="add-btn" onclick="addItem('شيشه فواكه بالنكهه', 40)">+</button></div></div>
     </div>
-    <p class="copy">© 2026 جميع الحقوق محفوظة - بن الحشم</p>
-  </div>
-</footer>
+  </section>
 
-<div class="floating-cart" onclick="openCart()">
-  🛒 <span id="cartCount">0</span>
+  <!-- ===== العصائر ===== -->
+  <section class="menu-section" id="section-العصائر">
+    <div class="section-header"><h2>🧃 ركن العصائر الفريش</h2></div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير مانجو</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('عصير مانجو', 30)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير مانجو بالحليب</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('عصير مانجو بالحليب', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير فراوله</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('عصير فراوله', 30)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير فراوله بالحليب</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('عصير فراوله بالحليب', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير جوافه</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('عصير جوافه', 30)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير جوافه بالحليب</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('عصير جوافه بالحليب', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">تمر ساقع</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('تمر ساقع', 20)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عناب موز بالحليب</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('عناب موز بالحليب', 20)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير موز</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('عصير موز', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير بطيخ</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('عصير بطيخ', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير برتقال</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('عصير برتقال', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير ريلاكس</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('عصير ريلاكس', 20)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير ليمون</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('عصير ليمون', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير ليمون نعناع</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('عصير ليمون نعناع', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير مانجو-فراوله-موز</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('عصير مانجو-فراوله-موز', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عصير مانجو-جوافه-موز</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('عصير مانجو-جوافه-موز', 35)">+</button></div></div>
+    </div>
+    <div class="subsection-title">🫙 زباري وكوكتيلات</div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">زباري فواكه خلاط</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('زباري فواكه خلاط', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">زباري مانجو</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('زباري مانجو', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">زباري فراوله</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('زباري فراوله', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">زباري جوافه</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('زباري جوافه', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">زباري عسل</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('زباري عسل', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">زباري موز</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('زباري موز', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">زباري كيوي</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('زباري كيوي', 30)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">آيس بوريو</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('آيس بوريو', 30)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">آيس أوريو</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('آيس أوريو', 30)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كوكتيل</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('كوكتيل', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">قمبله تيتو</span></div><div class="item-right"><span class="item-price">50 جنيه</span><button class="add-btn" onclick="addItem('قمبله تيتو', 50)">+</button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== الفرابيه ===== -->
+  <section class="menu-section" id="section-الفرابيه">
+    <div class="section-header"><h2>🥤 ركن الفرابيه</h2></div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">فرابيه كلاسيك</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('فرابيه كلاسيك', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فرابيه كراميل</span></div><div class="item-right"><span class="item-price">40 جنيه</span><button class="add-btn" onclick="addItem('فرابيه كراميل', 40)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فرابيه لوتس</span></div><div class="item-right"><span class="item-price">45 جنيه</span><button class="add-btn" onclick="addItem('فرابيه لوتس', 45)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فرابيه بندق</span></div><div class="item-right"><span class="item-price">40 جنيه</span><button class="add-btn" onclick="addItem('فرابيه بندق', 40)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فرابتشينو</span></div><div class="item-right"><span class="item-price">50 جنيه</span><button class="add-btn" onclick="addItem('فرابتشينو', 50)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فرابيه كراميل (2)</span></div><div class="item-right"><span class="item-price">55 جنيه</span><button class="add-btn" onclick="addItem('فرابيه كراميل (2)', 55)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فرابيه شوكليت</span></div><div class="item-right"><span class="item-price">50 جنيه</span><button class="add-btn" onclick="addItem('فرابيه شوكليت', 50)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فرابيه فانيليا</span></div><div class="item-right"><span class="item-price">50 جنيه</span><button class="add-btn" onclick="addItem('فرابيه فانيليا', 50)">+</button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== ملك شيك ===== -->
+  <section class="menu-section" id="section-ملك_شيك">
+    <div class="section-header"><h2>🍫 ركن ملك اتشيك</h2></div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك فراوله</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك فراوله', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك مانجو</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك مانجو', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك فانليا</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك فانليا', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك شكولاته</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك شكولاته', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك كارمل</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك كارمل', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك أوريو</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك أوريو', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك بوريو</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك بوريو', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك نوتيلا</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك نوتيلا', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك كيت كات</span></div><div class="item-right"><span class="item-price">40 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك كيت كات', 40)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك لوتس</span></div><div class="item-right"><span class="item-price">60 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك لوتس', 60)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك تشيز لوتس</span></div><div class="item-right"><span class="item-price">40 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك تشيز لوتس', 40)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك بلوبيري</span></div><div class="item-right"><span class="item-price">45 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك بلوبيري', 45)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك خوخ</span></div><div class="item-right"><span class="item-price">40 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك خوخ', 40)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك كيوي</span></div><div class="item-right"><span class="item-price">40 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك كيوي', 40)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك تويكيز</span></div><div class="item-right"><span class="item-price">45 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك تويكيز', 45)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك هوهوز</span></div><div class="item-right"><span class="item-price">50 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك هوهوز', 50)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">ميلك شيك ميكس هوهوز</span></div><div class="item-right"><span class="item-price">55 جنيه</span><button class="add-btn" onclick="addItem('ميلك شيك ميكس هوهوز', 55)">+</button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== آيس كريم ===== -->
+  <section class="menu-section" id="section-الآيس_كريم">
+    <div class="section-header"><h2>🍦 ركن الآيس كريم</h2></div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">آيس كريم 2 بولا</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('آيس كريم 2 بولا', 20)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">آيس كريم 2 بولا مكسرات</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('آيس كريم 2 بولا مكسرات', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">آيس كريم 3 بولا</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('آيس كريم 3 بولا', 30)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">آيس كريم 3 بولا مكسرات</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('آيس كريم 3 بولا مكسرات', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">آيس كريم فواكه (تفاح-موز)</span></div><div class="item-right"><span class="item-price">40 جنيه</span><button class="add-btn" onclick="addItem('آيس كريم فواكه', 40)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">آيس كريم حسب الطلب (مانجو-فراوله-أوريو-شكولاته-فانيليا-فسق)</span></div><div class="item-right"><span class="item-price">حسب الطلب</span><button class="add-btn" onclick="addItem('آيس كريم حسب الطلب', 0)">+</button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== الوافل ===== -->
+  <section class="menu-section" id="section-الوافل">
+    <div class="section-header"><h2>🧇 ركن الوافل</h2></div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">وافل نوتيلا</span></div><div class="item-right"><span class="item-price">50 جنيه</span><button class="add-btn" onclick="addItem('وافل نوتيلا', 50)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">وافل ميكس شكولاته (وايت-نوتيلا-لوتس)</span></div><div class="item-right"><span class="item-price">60 جنيه</span><button class="add-btn" onclick="addItem('وافل ميكس شكولاته', 60)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">وافل أوريو</span></div><div class="item-right"><span class="item-price">60 جنيه</span><button class="add-btn" onclick="addItem('وافل أوريو', 60)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">وافل عسل</span></div><div class="item-right"><span class="item-price">50 جنيه</span><button class="add-btn" onclick="addItem('وافل عسل', 50)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">وافل مكسرات عسل</span></div><div class="item-right"><span class="item-price">55 جنيه</span><button class="add-btn" onclick="addItem('وافل مكسرات عسل', 55)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">وافل فواكه</span></div><div class="item-right"><span class="item-price">50 جنيه</span><button class="add-btn" onclick="addItem('وافل فواكه', 50)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">وافل جلاكسي</span></div><div class="item-right"><span class="item-price">55 جنيه</span><button class="add-btn" onclick="addItem('وافل جلاكسي', 55)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">وافل كيت كات</span></div><div class="item-right"><span class="item-price">60 جنيه</span><button class="add-btn" onclick="addItem('وافل كيت كات', 60)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">وافل فروت آيس</span></div><div class="item-right"><span class="item-price">65 جنيه</span><button class="add-btn" onclick="addItem('وافل فروت آيس', 65)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">وافل فروت</span></div><div class="item-right"><span class="item-price">60 جنيه</span><button class="add-btn" onclick="addItem('وافل فروت', 60)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">وافل فسدق</span></div><div class="item-right"><span class="item-price">65 جنيه</span><button class="add-btn" onclick="addItem('وافل فسدق', 65)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">وافل لوتس</span></div><div class="item-right"><span class="item-price">60 جنيه</span><button class="add-btn" onclick="addItem('وافل لوتس', 60)">+</button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== البيتزا ===== -->
+  <section class="menu-section" id="section-البيتزا">
+    <div class="section-header"><h2>🍕 ركن البيتزا الإيطالي</h2><p class="section-sub">وسط / كبير / عائلي</p></div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا مارجريتا</span><span class="item-desc">صوص بيتزا + طماطم + فلفل + زيتون</span></div><div class="item-right"><span class="item-price">75/85/105</span><button class="add-btn" onclick="addItem('بيتزا مارجريتا', 75)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا جبن</span><span class="item-desc">صوص بيتزا + طماطم + جبن</span></div><div class="item-right"><span class="item-price">85/95/110</span><button class="add-btn" onclick="addItem('بيتزا جبن', 85)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا عشاق جبن</span><span class="item-desc">موتزاريلا + شيدر + صوص بيتزا</span></div><div class="item-right"><span class="item-price">85/95/120</span><button class="add-btn" onclick="addItem('بيتزا عشاق جبن', 85)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا لحمه مفرومه</span><span class="item-desc">كيرو رومي</span></div><div class="item-right"><span class="item-price">80/90/110</span><button class="add-btn" onclick="addItem('بيتزا لحمه مفرومه', 80)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا هموت روج</span></div><div class="item-right"><span class="item-price">80/90/120</span><button class="add-btn" onclick="addItem('بيتزا هموت روج', 80)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا بسطرمه</span></div><div class="item-right"><span class="item-price">80/90/110</span><button class="add-btn" onclick="addItem('بيتزا بسطرمه', 80)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا سجق شرقي</span></div><div class="item-right"><span class="item-price">90/100/120</span><button class="add-btn" onclick="addItem('بيتزا سجق شرقي', 90)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا شاورما فراخ</span></div><div class="item-right"><span class="item-price">100/110/130</span><button class="add-btn" onclick="addItem('بيتزا شاورما فراخ', 100)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا تشيكن رانش</span><span class="item-desc">شاورما + صوص رانش + خضراوات + موتزاريلا</span></div><div class="item-right"><span class="item-price">100/110/130</span><button class="add-btn" onclick="addItem('بيتزا تشيكن رانش', 100)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا رانش كرانش</span></div><div class="item-right"><span class="item-price">95/105/120</span><button class="add-btn" onclick="addItem('بيتزا رانش كرانش', 95)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا تشيكن باربكيو</span><span class="item-desc">صوص باربكيو + رجاجه مقليه</span></div><div class="item-right"><span class="item-price">100/110/120</span><button class="add-btn" onclick="addItem('بيتزا تشيكن باربكيو', 100)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا سوبر سوبريم</span><span class="item-desc">مفروم + سوسيس + مشروم</span></div><div class="item-right"><span class="item-price">100/110/120</span><button class="add-btn" onclick="addItem('بيتزا سوبر سوبريم', 100)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا ميكس بجاج</span></div><div class="item-right"><span class="item-price">90/105/120</span><button class="add-btn" onclick="addItem('بيتزا ميكس بجاج', 90)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا تونه قطع</span></div><div class="item-right"><span class="item-price">90/120/150</span><button class="add-btn" onclick="addItem('بيتزا تونه قطع', 90)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا سلامي</span></div><div class="item-right"><span class="item-price">100/110/130</span><button class="add-btn" onclick="addItem('بيتزا سلامي', 100)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا ميكس لحوم</span></div><div class="item-right"><span class="item-price">105/120/150</span><button class="add-btn" onclick="addItem('بيتزا ميكس لحوم', 105)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بيتزا تيتو أربع أصناف</span></div><div class="item-right"><span class="item-price">حسب الاختيار</span><button class="add-btn" onclick="addItem('بيتزا تيتو أربع أصناف', 0)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">حشو أطراف</span></div><div class="item-right"><span class="item-price">20/30</span><button class="add-btn" onclick="addItem('حشو أطراف', 20)">+</button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== الكريب ===== -->
+  <section class="menu-section" id="section-الكريب">
+    <div class="section-header"><h2>🥐 ركن الكريب</h2></div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">كريب بطاطس</span></div><div class="item-right"><span class="item-price">50 جنيه</span><button class="add-btn" onclick="addItem('كريب بطاطس', 50)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كريب بانيه</span></div><div class="item-right"><span class="item-price">65 جنيه</span><button class="add-btn" onclick="addItem('كريب بانيه', 65)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كريب بانيه بطاطس</span></div><div class="item-right"><span class="item-price">70 جنيه</span><button class="add-btn" onclick="addItem('كريب بانيه بطاطس', 70)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كريب استربس فريش</span></div><div class="item-right"><span class="item-price">85 جنيه</span><button class="add-btn" onclick="addItem('كريب استربس فريش', 85)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كريب زنجر حار فريش</span></div><div class="item-right"><span class="item-price">85 جنيه</span><button class="add-btn" onclick="addItem('كريب زنجر حار فريش', 85)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كريب شاورما رجاج</span></div><div class="item-right"><span class="item-price">75 جنيه</span><button class="add-btn" onclick="addItem('كريب شاورما رجاج', 75)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كريب لحمه مفروم</span></div><div class="item-right"><span class="item-price">75 جنيه</span><button class="add-btn" onclick="addItem('كريب لحمه مفروم', 75)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كريب سجق شرقي</span></div><div class="item-right"><span class="item-price">70 جنيه</span><button class="add-btn" onclick="addItem('كريب سجق شرقي', 70)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كريب برجر فريش</span></div><div class="item-right"><span class="item-price">80 جنيه</span><button class="add-btn" onclick="addItem('كريب برجر فريش', 80)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كريب سوبر كرانشي</span></div><div class="item-right"><span class="item-price">90 جنيه</span><button class="add-btn" onclick="addItem('كريب سوبر كرانشي', 90)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كريب العملاق</span><span class="item-desc">بانيه + سجق + استربس</span></div><div class="item-right"><span class="item-price">100 جنيه</span><button class="add-btn" onclick="addItem('كريب العملاق', 100)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كريب بور جميم</span><span class="item-desc">شاورما + مفروم + زنجر</span></div><div class="item-right"><span class="item-price">100 جنيه</span><button class="add-btn" onclick="addItem('كريب بور جميم', 100)">+</button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== البرجر ===== -->
+  <section class="menu-section" id="section-البرجر">
+    <div class="section-header"><h2>🍔 ركن البرجر</h2></div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">برجر عادي</span><span class="item-desc">قطع برجر + خس + صوص برجر + طماطم + خيار + بطاطس</span></div><div class="item-right"><span class="item-price">75 جنيه</span><button class="add-btn" onclick="addItem('برجر عادي', 75)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">برجر دبل</span><span class="item-desc">2 قطع برجر + خس + صوص + طماطم + خيار + بطاطس</span></div><div class="item-right"><span class="item-price">110 جنيه</span><button class="add-btn" onclick="addItem('برجر دبل', 110)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">برجر شيدر</span><span class="item-desc">شيدر + موتزاريلا + خس + صوص + طماطم + خيار + بطاطس</span></div><div class="item-right"><span class="item-price">90 جنيه</span><button class="add-btn" onclick="addItem('برجر شيدر', 90)">+</button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== المكرونات ===== -->
+  <section class="menu-section" id="section-المكرونات">
+    <div class="section-header"><h2>🍝 ركن المكرونات</h2></div>
+    <div class="subsection-title">🤍 صوص أبيض (وسط/كبير)</div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">نجرسكو أبيض</span></div><div class="item-right"><span class="item-price">60/80 جنيه</span><button class="add-btn" onclick="addItem('نجرسكو أبيض', 60)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">لحمه مفروم أبيض</span></div><div class="item-right"><span class="item-price">50/70 جنيه</span><button class="add-btn" onclick="addItem('لحمه مفروم أبيض', 50)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">سجق شرقي أبيض</span></div><div class="item-right"><span class="item-price">50/65 جنيه</span><button class="add-btn" onclick="addItem('سجق شرقي أبيض', 50)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">شاورما أبيض</span></div><div class="item-right"><span class="item-price">55/75 جنيه</span><button class="add-btn" onclick="addItem('شاورما أبيض', 55)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">عشاق جبن أبيض</span></div><div class="item-right"><span class="item-price">50/70 جنيه</span><button class="add-btn" onclick="addItem('عشاق جبن أبيض', 50)">+</button></div></div>
+    </div>
+    <div class="subsection-title">❤️ صوص أحمر (وسط/كبير)</div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">لحمه مفروم أحمر</span></div><div class="item-right"><span class="item-price">45/55 جنيه</span><button class="add-btn" onclick="addItem('لحمه مفروم أحمر', 45)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">سجق أحمر</span></div><div class="item-right"><span class="item-price">45/55 جنيه</span><button class="add-btn" onclick="addItem('سجق أحمر', 45)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">سوسيس أحمر</span></div><div class="item-right"><span class="item-price">45/50 جنيه</span><button class="add-btn" onclick="addItem('سوسيس أحمر', 45)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بسطرمه أحمر</span></div><div class="item-right"><span class="item-price">45/60 جنيه</span><button class="add-btn" onclick="addItem('بسطرمه أحمر', 45)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">شاورما أحمر</span></div><div class="item-right"><span class="item-price">45/55 جنيه</span><button class="add-btn" onclick="addItem('شاورما أحمر', 45)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كبده أحمر</span></div><div class="item-right"><span class="item-price">45/60 جنيه</span><button class="add-btn" onclick="addItem('كبده أحمر', 45)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">مكس لحوم أحمر</span></div><div class="item-right"><span class="item-price">55/70 جنيه</span><button class="add-btn" onclick="addItem('مكس لحوم أحمر', 55)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">مكس جبن أحمر</span></div><div class="item-right"><span class="item-price">55/65 جنيه</span><button class="add-btn" onclick="addItem('مكس جبن أحمر', 55)">+</button></div></div>
+    </div>
+    <div class="subsection-title">🥐 ركن الفطائر الرول</div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">رول سكر</span></div><div class="item-right"><span class="item-price">15 جنيه</span><button class="add-btn" onclick="addItem('رول سكر', 15)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">رول مربى</span></div><div class="item-right"><span class="item-price">15 جنيه</span><button class="add-btn" onclick="addItem('رول مربى', 15)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">رول عسل أبيض</span></div><div class="item-right"><span class="item-price">15 جنيه</span><button class="add-btn" onclick="addItem('رول عسل أبيض', 15)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">رول جبنه فيتا</span></div><div class="item-right"><span class="item-price">15 جنيه</span><button class="add-btn" onclick="addItem('رول جبنه فيتا', 15)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">رول جبنه قديمة</span></div><div class="item-right"><span class="item-price">15 جنيه</span><button class="add-btn" onclick="addItem('رول جبنه قديمة', 15)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">رول جبنه مثلثات</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('رول جبنه مثلثات', 20)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">رول حلاوه سبريد</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('رول حلاوه سبريد', 20)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">رول لانشون</span></div><div class="item-right"><span class="item-price">20 جنيه</span><button class="add-btn" onclick="addItem('رول لانشون', 20)">+</button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== الفطائر ===== -->
+  <section class="menu-section" id="section-الفطائر">
+    <div class="section-header"><h2>🫓 ركن الفطائر</h2></div>
+    <div class="subsection-title">🔥 الفطائر الشرقية (وسط/كبير)</div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره رومامي</span></div><div class="item-right"><span class="item-price">75/85 جنيه</span><button class="add-btn" onclick="addItem('فطيره رومامي', 75)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره عشاق جبن</span></div><div class="item-right"><span class="item-price">85/110 جنيه</span><button class="add-btn" onclick="addItem('فطيره عشاق جبن', 85)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره لحمه مفروم</span></div><div class="item-right"><span class="item-price">85/110 جنيه</span><button class="add-btn" onclick="addItem('فطيره لحمه مفروم', 85)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره سجق شرقي</span></div><div class="item-right"><span class="item-price">80/100 جنيه</span><button class="add-btn" onclick="addItem('فطيره سجق شرقي', 80)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره بسطرمه</span></div><div class="item-right"><span class="item-price">90/120 جنيه</span><button class="add-btn" onclick="addItem('فطيره بسطرمه', 90)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره شاورما فراخ</span></div><div class="item-right"><span class="item-price">90/120 جنيه</span><button class="add-btn" onclick="addItem('فطيره شاورما فراخ', 90)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره رانش كرانش</span></div><div class="item-right"><span class="item-price">95/125 جنيه</span><button class="add-btn" onclick="addItem('فطيره رانش كرانش', 95)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره تشيكن باربكيو</span></div><div class="item-right"><span class="item-price">95/125 جنيه</span><button class="add-btn" onclick="addItem('فطيره تشيكن باربكيو', 95)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره مكس رجاج</span></div><div class="item-right"><span class="item-price">100/130 جنيه</span><button class="add-btn" onclick="addItem('فطيره مكس رجاج', 100)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره مكس لحوم</span></div><div class="item-right"><span class="item-price">100/130 جنيه</span><button class="add-btn" onclick="addItem('فطيره مكس لحوم', 100)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره تونه قطع</span></div><div class="item-right"><span class="item-price">100/120 جنيه</span><button class="add-btn" onclick="addItem('فطيره تونه قطع', 100)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيرة مشلتت</span></div><div class="item-right"><span class="item-price">65 جنيه</span><button class="add-btn" onclick="addItem('فطيرة مشلتت', 65)">+</button></div></div>
+    </div>
+    <div class="subsection-title">🍯 الفطائر الحلوة</div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره نوتيلا</span></div><div class="item-right"><span class="item-price">60 جنيه</span><button class="add-btn" onclick="addItem('فطيره نوتيلا', 60)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره نوتيلا موز</span></div><div class="item-right"><span class="item-price">75 جنيه</span><button class="add-btn" onclick="addItem('فطيره نوتيلا موز', 75)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره قشطة بسبوسه</span></div><div class="item-right"><span class="item-price">80 جنيه</span><button class="add-btn" onclick="addItem('فطيره قشطة بسبوسه', 80)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره قشطة كنافه</span></div><div class="item-right"><span class="item-price">80 جنيه</span><button class="add-btn" onclick="addItem('فطيره قشطة كنافه', 80)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">فطيره قشطة عسل مكسرات</span></div><div class="item-right"><span class="item-price">75 جنيه</span><button class="add-btn" onclick="addItem('فطيره قشطة عسل مكسرات', 75)">+</button></div></div>
+    </div>
+    <div class="subsection-title">🥙 الحواوشي والبيتزا</div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">حواوشي لحمه مفروم</span></div><div class="item-right"><span class="item-price">85 جنيه</span><button class="add-btn" onclick="addItem('حواوشي لحمه مفروم', 85)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">حواوشي سجق شرقي</span></div><div class="item-right"><span class="item-price">80 جنيه</span><button class="add-btn" onclick="addItem('حواوشي سجق شرقي', 80)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">حواوشي شاورما فراخ</span></div><div class="item-right"><span class="item-price">90 جنيه</span><button class="add-btn" onclick="addItem('حواوشي شاورما فراخ', 90)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">حواوشي تيتو</span></div><div class="item-right"><span class="item-price">100 جنيه</span><button class="add-btn" onclick="addItem('حواوشي تيتو', 100)">+</button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== الوجبات ===== -->
+  <section class="menu-section" id="section-الوجبات">
+    <div class="section-header"><h2>🍽️ ركن الوجبات</h2></div>
+    <div class="items-grid meals-grid">
+      <div class="item-card meal-card">
+        <div class="meal-badge">150 جنيه</div>
+        <div class="item-info">
+          <span class="item-name">وجبة طاجن لحمه بلدي</span>
+          <span class="item-desc">عيش سوري + طومه + أرز بسمتي</span>
+        </div>
+        <button class="add-btn" onclick="addItem('وجبة طاجن لحمه بلدي', 150)">+</button>
+      </div>
+      <div class="item-card meal-card">
+        <div class="meal-badge">85 جنيه</div>
+        <div class="item-info">
+          <span class="item-name">وجبة استربس سنجل</span>
+          <span class="item-desc">3 قطع فراخ + بطاطس + عيش سوري + طومه + أرز بسمتي</span>
+        </div>
+        <button class="add-btn" onclick="addItem('وجبة استربس سنجل', 85)">+</button>
+      </div>
+      <div class="item-card meal-card">
+        <div class="meal-badge">150 جنيه</div>
+        <div class="item-info">
+          <span class="item-name">وجبة زنجر حار كابلز</span>
+          <span class="item-desc">5 قطع زنجر حار + بطاطس + عيش سوري + طومه + أرز بسمتي</span>
+        </div>
+        <button class="add-btn" onclick="addItem('وجبة زنجر حار كابلز', 150)">+</button>
+      </div>
+      <div class="item-card meal-card">
+        <div class="meal-badge">65 جنيه</div>
+        <div class="item-info">
+          <span class="item-name">وجبة كبده إسكندراني</span>
+          <span class="item-desc">أرز بسمتي + كبده + عيش سوري + طومه</span>
+        </div>
+        <button class="add-btn" onclick="addItem('وجبة كبده إسكندراني', 65)">+</button>
+      </div>
+      <div class="item-card meal-card">
+        <div class="meal-badge">120 جنيه</div>
+        <div class="item-info">
+          <span class="item-name">وجبة كفته بلدي</span>
+          <span class="item-desc">1/4 كيلو كفته + بطاطس + عيش سوري + طومه + أرز بسمتي</span>
+        </div>
+        <button class="add-btn" onclick="addItem('وجبة كفته بلدي', 120)">+</button>
+      </div>
+      <div class="item-card meal-card">
+        <div class="meal-badge">85 جنيه</div>
+        <div class="item-info">
+          <span class="item-name">وجبة شرقي سحق</span>
+          <span class="item-desc">طومه + أرز بسمتي</span>
+        </div>
+        <button class="add-btn" onclick="addItem('وجبة شرقي سحق', 85)">+</button>
+      </div>
+      <div class="item-card meal-card">
+        <div class="meal-badge">حسب الطلب</div>
+        <div class="item-info">
+          <span class="item-name">وجبة مكس حسب الطلب</span>
+        </div>
+        <button class="add-btn" onclick="addItem('وجبة مكس حسب الطلب', 0)">+</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== السوري ===== -->
+  <section class="menu-section" id="section-السوري">
+    <div class="section-header"><h2>🥙 ركن السوري</h2></div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">بطاطس</span></div><div class="item-right"><span class="item-price">25 جنيه</span><button class="add-btn" onclick="addItem('بطاطس', 25)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">استربس فريش</span></div><div class="item-right"><span class="item-price">45 جنيه</span><button class="add-btn" onclick="addItem('استربس فريش', 45)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">زنجر فريش</span></div><div class="item-right"><span class="item-price">45 جنيه</span><button class="add-btn" onclick="addItem('زنجر فريش', 45)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">كبده إسكندراني</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('كبده إسكندراني', 30)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">سجق شرقي</span></div><div class="item-right"><span class="item-price">30 جنيه</span><button class="add-btn" onclick="addItem('سجق شرقي', 30)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بانيه بطاطس</span></div><div class="item-right"><span class="item-price">35 جنيه</span><button class="add-btn" onclick="addItem('بانيه بطاطس', 35)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">شاورما رجاج</span></div><div class="item-right"><span class="item-price">45 جنيه</span><button class="add-btn" onclick="addItem('شاورما رجاج', 45)">+</button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== الصيامي ===== -->
+  <section class="menu-section" id="section-الصيامي">
+    <div class="section-header"><h2>🫕 ركن الصيامي</h2><p class="section-sub">صغير / وسط / كبير</p></div>
+    <div class="items-grid">
+      <div class="item-card"><div class="item-info"><span class="item-name">كفته صيامي</span></div><div class="item-right"><span class="item-price">75/80/100 جنيه</span><button class="add-btn" onclick="addItem('كفته صيامي', 75)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">بانيه صيامي</span></div><div class="item-right"><span class="item-price">75/80/100 جنيه</span><button class="add-btn" onclick="addItem('بانيه صيامي', 75)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">شاورما لحمه صيامي</span></div><div class="item-right"><span class="item-price">80/95/110 جنيه</span><button class="add-btn" onclick="addItem('شاورما لحمه صيامي', 80)">+</button></div></div>
+      <div class="item-card"><div class="item-info"><span class="item-name">شاورما فراخ صيامي</span></div><div class="item-right"><span class="item-price">80/95/110 جنيه</span><button class="add-btn" onclick="addItem('شاورما فراخ صيامي', 80)">+</button></div></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- CART SECTION -->
+<section class="cart-section" id="cartSection">
+  <h3>🛒 سلة الطلبات</h3>
+  <div id="cartItems"></div>
+  <div class="cart-total-row">
+    <span>الإجمالي:</span>
+    <span id="cartTotal">0 جنيه</span>
+  </div>
+  <!-- PROMO -->
+  <div class="promo-row">
+    <input id="promoInput" placeholder="كود الخصم (اختياري)" />
+    <button class="promo-apply-btn" onclick="applyPromo()">تطبيق</button>
+  </div>
+  <p id="promoMsg"></p>
+  <p id="discountLine" style="display:none;"></p>
+  <button class="checkout-btn" onclick="openCheckout()">✅ تأكيد الطلب</button>
+</section>
+
+<!-- CHECKOUT POPUP -->
+<div id="checkoutPopup" class="popup-overlay" onclick="closePopup()">
+  <div class="popup-box" onclick="event.stopPropagation()">
+    <h3>📋 تفاصيل الطلب</h3>
+    <input id="custName" placeholder="الاسم" />
+    <input id="custPhone" placeholder="رقم الهاتف" type="tel" inputmode="numeric" />
+    <input id="custAddress" placeholder="العنوان" />
+    <button class="checkout-btn" onclick="sendOrder()">📲 إرسال عبر واتساب</button>
+  </div>
+</div>
+
+<!-- FLOATING CART -->
+<div class="floating-cart" onclick="scrollToCart()">
+  🛒<span id="cartBadge">0</span>
 </div>
 
 <script src="script.js"></script>
 </body>
-</html>
+                                                                                                    </html>
